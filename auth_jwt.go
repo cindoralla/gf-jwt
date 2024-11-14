@@ -782,7 +782,11 @@ func (mw *GfJWTMiddleware) setBlacklist(ctx context.Context, token string, claim
 
 	// save duration time = (exp + max_refresh) - now
 	// duration := time.Unix(exp, 0).Add(mw.MaxRefresh).Sub(mw.TimeFunc()).Truncate(time.Second)
-	duration := time.Unix(0, exp).Add(mw.MaxRefresh).Sub(mw.TimeFunc()).Truncate(time.Second)
+	if exp > 1e9 {
+		exp = exp / 1e3
+	}
+
+	duration := time.Unix(exp, 0).Add(mw.MaxRefresh).Sub(mw.TimeFunc()).Truncate(time.Second)
 
 	key := mw.BlacklistPrefix + token
 	// global gcache
