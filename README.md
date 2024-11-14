@@ -10,7 +10,7 @@ It uses jwt-go to provide a jwt authentication middleware. It provides additiona
 
 ## Use
 
-Download and install
+Download and install 
 
 ```sh
 $ go get github.com/gogf/gf-jwt/v2
