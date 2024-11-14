@@ -767,7 +767,7 @@ func (mw *GfJWTMiddleware) middlewareImpl(ctx context.Context) {
 		return
 	}
 
-	//c.Next() todo
+	// c.Next() todo
 }
 
 func (mw *GfJWTMiddleware) setBlacklist(ctx context.Context, token string, claims jwt.MapClaims) error {
@@ -781,7 +781,8 @@ func (mw *GfJWTMiddleware) setBlacklist(ctx context.Context, token string, claim
 	exp := int64(claims["exp"].(float64))
 
 	// save duration time = (exp + max_refresh) - now
-	duration := time.Unix(exp, 0).Add(mw.MaxRefresh).Sub(mw.TimeFunc()).Truncate(time.Second)
+	// duration := time.Unix(exp, 0).Add(mw.MaxRefresh).Sub(mw.TimeFunc()).Truncate(time.Second)
+	duration := time.Unix(0, exp).Add(mw.MaxRefresh).Sub(mw.TimeFunc()).Truncate(time.Second)
 
 	key := mw.BlacklistPrefix + token
 	// global gcache
